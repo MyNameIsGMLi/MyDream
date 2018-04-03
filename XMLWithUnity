@@ -1,0 +1,145 @@
+/// <summary>
+    /// 生成XML
+    /// </summary>
+    public void CreatXml()
+    {
+        Debug.Log(Application.dataPath);
+        //xml保存路径
+        string filePath = Application.dataPath + @"/my.xml";
+        //判断路径下是否存在Xml文件
+        if (!File.Exists(filePath))
+        {
+            //创建XML的文档实例
+            XmlDocument xmlDoc = new XmlDocument();
+            //创建Root结点，也就是最上面的一层
+            XmlElement root = xmlDoc.CreateElement("transfroms");
+            //继续创建下一层节点
+            XmlElement elmNew = xmlDoc.CreateElement("rotation");
+            //设置节点的属性  ID和Name
+            elmNew.SetAttribute("ID","0");
+            elmNew.SetAttribute("Name", "李光明");
+
+            // 继续创建下一层节点
+            XmlElement rotation_X = xmlDoc.CreateElement("X");
+            //设置节点中的数值
+            rotation_X.InnerText = "0";
+
+            //重复
+            XmlElement rotation_Y = xmlDoc.CreateElement("Y");
+            rotation_Y.InnerText = "1";
+            XmlElement rotation_Z = xmlDoc.CreateElement("Z");
+            rotation_Z.InnerText = "2";
+
+            //添加一个节点属性用来区分
+            rotation_Z.SetAttribute("id", "1");
+
+            //把节点一层一层的添加至XMLDoc中
+            elmNew.AppendChild(rotation_Z);
+            elmNew.AppendChild(rotation_Y);
+            elmNew.AppendChild(rotation_X);
+            root.AppendChild(elmNew);
+            xmlDoc.AppendChild(root);
+
+            xmlDoc.Save(filePath);
+            Debug.Log("creatXML  OK!");
+        }
+    }
+
+    /// <summary>
+    /// 更新XML文件
+    /// </summary>
+    public void UpdateXML()
+    {
+        string filePath = Application.dataPath + @"/my.xml";
+        if (File.Exists(filePath))
+        {
+            //创建Xml文件对象
+            XmlDocument xmlDoc = new XmlDocument();
+            //读取Xml文件的路径
+            xmlDoc.Load(filePath);
+            //得到transforms下的所有的子节点
+            XmlNodeList nodeList = xmlDoc.SelectSingleNode("transfroms").ChildNodes;
+            //遍历所有的子节点
+            foreach (XmlElement xe in nodeList)
+            {
+                //找到需要更新的子节点
+                if (xe.GetAttribute("ID") == "0")
+                { 
+                    //更新子节点的属性
+                    xe.SetAttribute("ID", "1000");
+                    //继续遍历
+                    foreach (XmlElement x1 in xe.ChildNodes)
+                    {
+                        if (x1.Name == "Z")
+                        {
+                            x1.InnerText = "update0000";
+                        }
+                    }
+                    break;
+                }
+            }
+            xmlDoc.Save(filePath);
+            Debug.Log("updateXml OK!");
+        }
+    }
+
+    /// <summary>
+    /// Xml文件的添加
+    /// </summary>
+    public void AddXml()
+    {
+        string filePath = Application.dataPath + @"/my.xml";
+        if (File.Exists(filePath))
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            XmlNode root = xmlDoc.SelectSingleNode("transfroms");
+            XmlElement element = xmlDoc.CreateElement("position");
+            element.SetAttribute("vector3", "(0,0,0)");
+            XmlElement X = xmlDoc.CreateElement("pos_x");
+            XmlElement Y = xmlDoc.CreateElement("pos_y");
+            XmlElement Z = xmlDoc.CreateElement("pos_z");
+            X.InnerText = "0";
+            Y.InnerText = "0";
+            Z.InnerText = "0";
+            element.AppendChild(Z);
+            element.AppendChild(Y);
+            element.AppendChild(X);
+            root.AppendChild(element);
+            xmlDoc.AppendChild(root);
+            xmlDoc.Save(filePath);
+            Debug.Log("AddXML IS OK！");
+        }
+    }
+
+    /// <summary>
+    /// 删除Xml文件
+    /// </summary>
+    public void DeleteXml()
+    {
+        string filePath = Application.dataPath+@"/my.xml";
+        if (File.Exists(filePath))
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            XmlNodeList xmlNodeList = xmlDoc.SelectSingleNode("transfroms").ChildNodes;
+            foreach (XmlElement xe in xmlNodeList)
+            {
+                if (xe.Name == "position")
+                {
+                    foreach (XmlElement xe1 in xe.ChildNodes)
+                    {
+                        if (xe1.Name == "pos_x")
+                        {
+                            XmlElement target = xe1;
+                            xe.RemoveChild(target);
+                            break;
+                        }
+                    }
+                    break; 
+                }
+            }
+            xmlDoc.Save(filePath);
+        }
+        Debug.Log("DeleteXml Is Ok!");
+    }

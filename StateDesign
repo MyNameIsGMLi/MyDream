@@ -1,0 +1,92 @@
+//StateDesign（状态模式）
+//状态模式其实质是为了方便各种状态之间的转换，方式并不是唯一的，实现了各个状态之间的装换，状态之间尽可能的降低耦合性即可
+//以下为实例脚本（不唯一）
+
+    void Start () {
+        SelectState selectState = new SelectState();
+        selectState.SetState(new StateOne());
+        selectState.State(1);
+        selectState.State(2);
+        selectState.State(0);
+    }
+	
+}
+
+/// <summary>
+/// 选择状态类
+/// </summary>
+public class SelectState
+{
+    private StateMould mstateMould;
+    public void SetState(StateMould stateMould)
+    {
+        mstateMould = stateMould;
+    }
+
+    public void State(int arg)
+    {
+        switch (arg)
+        {
+            case 0:
+                mstateMould = new StateOne();
+                break;
+            case 1:
+                mstateMould = new StateTwo();
+                break;
+            case 2:
+                mstateMould = new StateThree();
+                break;
+        }
+        mstateMould.State(arg);
+    }
+}
+/// <summary>
+/// 状态模板类
+/// </summary>
+public class StateMould
+{
+    /// <summary>
+    /// 状态实现函数
+    /// </summary>
+    public virtual void State(int arg) { }
+}
+/// <summary>
+/// 第一个状态
+/// </summary>
+public class StateOne:StateMould
+{
+   
+    public override void State(int arg)
+    {
+        if (arg==0)
+        {
+            Debug.Log("第一个状态");
+        }
+    }
+}
+/// <summary>
+/// 第二个状态
+/// </summary>
+public class StateTwo : StateMould
+{
+    public override void State(int arg)
+    {
+        if (arg == 1)
+        {
+            Debug.Log("第二个状态");
+        }
+    }
+}
+/// <summary>
+/// 第三个状态
+/// </summary>
+public class StateThree : StateMould
+{
+    public override void State(int arg)
+    {
+        if (arg == 2)
+        {
+            Debug.Log("第三个状态");
+        }
+    }
+}

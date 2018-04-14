@@ -4,7 +4,9 @@
 
     void Start () {
         SelectState selectState = new SelectState();
+	//设置初始的状态
         selectState.SetState(new StateOne());
+	//状态之间的转换测试
         selectState.State(1);
         selectState.State(2);
         selectState.State(0);

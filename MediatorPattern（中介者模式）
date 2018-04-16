@@ -1,0 +1,74 @@
+public class MediatorPattern : MonoBehaviour {
+    private AAndBConnect mAAndBConnect;
+    private ClassTest mClassA;
+    private ClassTest mClassB;
+	// Use this for initialization
+	void Start () {
+        //调用中介者实现A和B的之间互通
+        //中介者模式其实质是：Controller   各种Controller的本质就是中介者模式，就是提供了一个大家进行沟通，各功能之间进行一个交流的平台脚本
+        mAAndBConnect = new AAndBConnect();
+        mClassA = new ClassA();
+        mClassB = new ClassB();
+        mAAndBConnect.ConnnetShow(mClassA, mClassB);
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
+
+public abstract class ClassTest
+{
+    public abstract void Show(ClassTest classTest_1,char c);
+}
+/// <summary>
+/// 沟通者A
+/// </summary>
+public class ClassA:ClassTest
+{
+    public override void Show(ClassTest classTest_1, char c)
+    {
+        Debug.Log("收到"+classTest_1.ToString()+"的通知："+c);
+    }
+}
+/// <summary>
+/// 沟通者B
+/// </summary>
+public class ClassB:ClassTest
+{
+    public override void Show(ClassTest classTest_1, char c)
+    {
+        Debug.Log("收到" + classTest_1.ToString() + "的通知：" + c);
+    }
+}
+
+/// <summary>
+/// 中介者  沟通A和B
+/// </summary>
+public class AAndBConnect
+{
+    private ClassA mClassA;
+    private ClassB mClassB;
+    public AAndBConnect()
+    {
+        Init();
+    }
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    private void Init()
+    {
+        mClassA = new ClassA();
+        mClassB = new ClassB();
+    }
+
+    public void ConnnetShow(ClassTest classTest_a,ClassTest classTest_b)
+    {
+        mClassA.Show(classTest_b, 'B');
+        mClassB.Show(classTest_a,'A');
+    }
+
+    
+}

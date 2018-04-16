@@ -1,0 +1,33 @@
+public class Singleton : MonoBehaviour {
+
+    private TestSingleton mTestSingleton;
+
+	// Use this for initialization
+	void Start () {
+       //调用单例类
+        mTestSingleton = TestSingleton._Singleton;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
+
+
+
+/// <summary>
+/// 单例模式示例类
+/// </summary>
+public class TestSingleton
+{
+    /*
+     * 单例模式的意义在于将一个类变成全局的公共访问点，仅有一个可访问对象全局共享
+     */
+
+    //先将类本身的构造函数私有化，防止创建对象
+    private TestSingleton() { Debug.Log("单例实现"); }
+    //提供一个公共访问点用来全局共享
+    private static TestSingleton mTestSingleton = new TestSingleton();
+    public static TestSingleton _Singleton{ get { return mTestSingleton; } }
+}

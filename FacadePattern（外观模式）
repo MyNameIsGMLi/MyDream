@@ -1,0 +1,82 @@
+public class FacadePattern : MonoBehaviour {
+
+    /*
+     * 外观模式的意义在于分析对象的本质  拆分为小部分功能  然后通过一个执行者
+     * 进行相应的调用  解决了代码的复杂、乱的问题 同时实现了脚本本身的解耦合
+     * 调用者不会直接涉及到具体的功能块，符合单一职责原则  便于脚本的更改和扩展
+     */
+
+    private CarConfiguration mCarConfiguration;
+
+
+	// Use this for initialization
+	void Start () {
+        mCarConfiguration = new CarConfiguration();
+        mCarConfiguration.NewEnergyCar();
+        mCarConfiguration.TraditionalCar();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
+
+//做一个发动汽车组成
+
+
+    /// <summary>
+    /// 外观类--选择汽车配置类型
+    /// </summary>
+public class CarConfiguration
+{
+    private NewEnergyCarConfiguration mNewEnergy;
+    private TraditionalCarConfiguration mTraditional;
+    
+    /// <summary>
+    /// 构造函数new对象
+    /// </summary>
+    public CarConfiguration()
+    {
+        mNewEnergy = new NewEnergyCarConfiguration();
+        mTraditional = new TraditionalCarConfiguration();
+    }
+    
+    /// <summary>
+    /// 新能源汽车
+    /// </summary>
+    public void NewEnergyCar()
+    {
+        mNewEnergy.EnergyCarConfiguration();
+    }
+    /// <summary>
+    /// 传统汽车
+    /// </summary>
+    public void TraditionalCar()
+    {
+        mTraditional._TraditionalCarConfiguration();
+    }
+}
+
+
+public class NewEnergyCarConfiguration
+{
+    /// <summary>
+    /// 能源汽车配置
+    /// </summary>
+    public void EnergyCarConfiguration()
+    {
+        Debug.Log("新能源汽车");
+    }
+}
+
+public class TraditionalCarConfiguration
+{
+    /// <summary>
+    /// 传统汽车配置
+    /// </summary>
+    public void _TraditionalCarConfiguration()
+    {
+        Debug.Log("传统汽车");
+    }
+}

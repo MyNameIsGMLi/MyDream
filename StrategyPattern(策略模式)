@@ -1,0 +1,64 @@
+
+//策略模式常用于不同算法转换的场景  以条件为主体，算法做抽象，做具体，进行组合而不是选择算法，目标和手段分离
+public class Strategy : MonoBehaviour {
+
+    public Price price;
+    public Grade grade;
+
+	// Use this for initialization
+	void Start () {
+        price = new Price_C();
+        grade = new Grade(price);
+        grade.GradeAndPrice();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
+
+//会员等级不同，价格不同
+//先设定等级
+public class Grade
+{
+    private Price mPrice;
+    public Grade(Price price)
+    {
+        this.mPrice = price;
+    }
+    public void GradeAndPrice()
+    {
+        Debug.Log("该等级的价格为："+ mPrice._Price()); 
+    }
+}
+//设定价格抽象
+public abstract class Price
+{
+    public abstract double _Price();
+}
+
+//实例化价格
+public class Price_A:Price
+{
+    public override double _Price()
+    {
+        return 100;
+    }
+}
+
+public class Price_B : Price
+{
+    public override double _Price()
+    {
+        return 100 * (1 - 0.1);
+    }
+}
+
+public class Price_C : Price
+{
+    public override double _Price()
+    {
+        return 100 * (1 - 0.2);
+    }
+}

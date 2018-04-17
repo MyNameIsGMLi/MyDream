@@ -1,0 +1,91 @@
+public class BridgingPattern_2 : MonoBehaviour {
+
+    public Color color;
+    public Shape shape;
+
+    public UseColorAndShape user;
+
+	// Use this for initialization
+	void Start () {
+        color = new RedColor();
+        shape = new Sphere();
+        user = new UseColorAndShape(color, shape);
+        user.Show();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
+
+
+//不同的形状，不同的配色
+//bridgingPattern桥接模式考虑   形状和颜色是两个大分类
+//所以先做颜色和形状的抽象
+/// <summary>
+/// 颜色抽象
+/// </summary>
+public interface Color
+{
+    void ShowColor();
+}
+/// <summary>
+/// 形状抽象
+/// </summary>
+public interface Shape
+{
+    void ShowShape();
+}
+
+
+//做好抽象之后需要有一个调用者存在
+public class UseColorAndShape
+{
+    private Color mColor;
+    private Shape mShape;
+    public UseColorAndShape(Color color,Shape shape)
+    {
+        this.mColor = color;
+        this.mShape = shape;
+    }
+
+    public void Show()
+    {
+        this.mColor.ShowColor();
+        this.mShape.ShowShape();
+    }
+}
+
+
+//颜色和形状的实现抽象
+public class RedColor : Color
+{
+    public void ShowColor()
+    {
+        Debug.Log("红色");
+    }
+}
+public class BlueColor : Color
+{
+   public void ShowColor()
+    {
+        Debug.Log("蓝色");
+    }
+}
+
+
+public class Cube : Shape
+{
+    public void ShowShape()
+    {
+        Debug.Log("方形");
+    }
+}
+public class Sphere : Shape
+{
+    public void ShowShape()
+    {
+        Debug.Log("圆形");
+    }
+}

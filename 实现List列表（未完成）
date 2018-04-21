@@ -1,0 +1,141 @@
+class ListDS<T>
+    {
+
+        private T[] array;
+        private int index;
+        public ListDS()
+        {
+            array = new T[index + 1];
+            index = 0;
+        }
+
+        /// <summary>
+        /// 返回ListDS列表的长度
+        /// </summary>
+        /// <returns></returns>
+        public int GetLength()
+        {
+            return array.Length;
+        }
+
+        /// <summary>
+        /// 添加元素
+        /// </summary>
+        /// <param name="date">数据</param>
+        public void Add(T date)
+        {
+            T[] array_2 = new T[index + 1];
+            for (int i = 0; i < array_2.Length; i++)
+            {
+                
+            }
+            array[index] = date;
+            index++;
+        }
+
+        /// <summary>
+        /// 判断列表是否为空
+        /// </summary>
+        /// <returns>返回一个bool类型</returns>
+        public bool IsNull()
+        {
+            if (GetLength() == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 删除其中的某个元素
+        /// </summary>
+        /// <param name="date">元素数据</param>
+        public void Remove(T date)
+        {
+            int count = 0;
+            T[] array_2 = new T[GetLength() - 1];
+            if (GetLength() != 0)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.WriteLine("a:"+array[i]);
+                    if (date.Equals(array[i]) && count == 0) { count++; }
+                    else
+                        array_2[i] = array[i+count];
+                }
+            }
+            //foreach (var item in array_2)
+            //{
+            //    Console.WriteLine("2:"+item);
+            //}
+            array = new T[GetLength() - 1];
+            index--;
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = array_2[i];
+            }
+        }
+
+        /// <summary>
+        /// 是否包含某数据
+        /// </summary>
+        /// <param name="date">数据元素</param>
+        /// <returns>返回一个bool值</returns>
+        public bool Contain(T date)
+        {
+            bool contain = false;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (date.Equals(array[i]))
+                {
+                    contain = true;
+                }
+                else
+                {
+                    contain = false;
+                }
+            }
+            return contain;
+        }
+
+        /// <summary>
+        /// 清除
+        /// </summary>
+        public void Clean()
+        {
+            array = new T[] { };
+            index = 0;
+        }
+
+        /// <summary>
+        /// 查看列表是否为空
+        /// </summary>
+        public bool IsEmpty()
+        {
+            if (GetLength() == 0) return true;
+            else return false;
+        }
+
+        /// <summary>
+        /// 取表中元素（根据索引取表元素）
+        /// </summary>
+        /// <param name="index">元素索引</param>
+        /// <returns>返回元素的值</returns>
+        public T GetElem(int index)
+        {
+
+            if (index < GetLength() && index >= 0)
+            {
+                return array[index];
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        public T this[int index]{ get { return array[index]; } }
+    }

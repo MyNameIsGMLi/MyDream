@@ -134,3 +134,40 @@
             }
         }
     }
+    
+    //单链表的节点初始化搭建
+     class LinkData<T>
+    {
+        private T head;//数据
+        private LinkData<T> next;//下一个数据的指针
+        public LinkData()
+        {
+            head = default(T);
+            next = null;
+        }
+        public LinkData(T data)
+        {
+            head = data;
+            next = null;
+        }
+        public LinkData(LinkData<T> linkData)
+        {
+            next = linkData;
+        }
+        public LinkData(LinkData<T> linkData,T date)
+        {
+            head = date;
+            next = linkData;
+        }
+
+        public T GetDate
+        {
+            get { return head; }
+            set { head = value; }
+        }
+        public LinkData<T> GetNext
+        {
+            get { return next; }
+            set { next = value;}
+        }
+    }

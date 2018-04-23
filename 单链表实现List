@@ -1,0 +1,136 @@
+    class LinkList<T> : IListDS<T>
+    {
+        LinkData<T> head;
+
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="Data">数据</param>
+        public void Add(T Data)
+        {
+            LinkData<T> linkData = new LinkData<T>(Data);
+            LinkData<T> NewData = head;
+            if (head == null)
+            {
+                head = linkData;
+            }
+            else
+            {
+                while (true)
+                {
+                    if (NewData.GetNext != null)
+                        NewData = NewData.GetNext;
+                    else
+                        break;
+                }
+                NewData.GetNext = linkData;
+            }
+        }
+        /// <summary>
+        /// 指定某一位置插入数据
+        /// </summary>
+        /// <param name="Data">数据</param>
+        /// <param name="index">位置索引（下标）</param>
+        public void InsertData(T Data, int index)
+        {
+            LinkData<T> NewData = new LinkData<T>(Data);
+            if (index == 0)
+            {
+                NewData.GetNext = head;
+                head = NewData;
+            }
+            else
+            {
+                LinkData<T> temp = head;
+                for (int i = 1; i <= index-1; i++)
+                {
+                    temp = temp.GetNext;
+                }
+                LinkData<T> previousDate = temp;
+                LinkData<T> currentDate = temp.GetNext;
+                temp.GetNext = NewData;
+                NewData.GetNext = currentDate;
+            }
+        }
+
+        /// <summary>
+        /// 删除指定位置的数据
+        /// </summary>
+        /// <param name="index">位置索引</param>
+        public void DeleteData(int index)
+        {
+            LinkData<T> NewData = head;
+            if (index == 0)
+            {
+                head = NewData.GetNext;
+            }
+            for (int i = 1; i <= index-1; i++)
+            {
+                NewData = NewData.GetNext;
+            }
+            LinkData<T> previousData = NewData;
+            LinkData<T> nextData = NewData.GetNext.GetNext;
+            previousData.GetNext = nextData;
+        }
+
+        /// <summary>
+        /// 清除
+        /// </summary>
+        public void Clean()
+        {
+            head = null;
+        }
+        /// <summary>
+        /// 获取链表长度
+        /// </summary>
+        /// <returns>返回长度</returns>
+        public int GetLength()
+        {
+            int count = 0;
+            LinkData<T> temp = head;
+            while (true)
+            {
+                if (temp.GetNext != null)
+                {
+                    temp = temp.GetNext;
+                    count++;
+                }
+                else
+                {
+                    return ++count;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断是否为空
+        /// </summary>
+        /// <returns>返回是否为空</returns>
+        public bool IsNull()
+        {
+            return head == null;
+        }
+
+
+        public T this[int index]
+        {
+            get
+            {
+                LinkData<T> temp = head;
+                if (index == 0) return head.GetDate;
+                if (temp != null)
+                {
+                    for (int i =1; i <= index; i++)
+                    {
+                        temp = temp.GetNext;
+                    }
+                    return temp.GetDate;
+                }
+                else
+                {
+                    return default(T);
+                }
+                
+            }
+        }
+    }

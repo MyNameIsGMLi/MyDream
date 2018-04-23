@@ -2,11 +2,10 @@ class ListDS<T>
     {
 
         private T[] array;
-        private int index;
+        //private int index;
         public ListDS()
         {
-            array = new T[index + 1];
-            index = 0;
+            array = new T[0];
         }
 
         /// <summary>
@@ -24,13 +23,12 @@ class ListDS<T>
         /// <param name="date">数据</param>
         public void Add(T date)
         {
-            T[] array_2 = new T[index + 1];
-            for (int i = 0; i < array_2.Length; i++)
-            {
-                
-            }
-            array[index] = date;
-            index++;
+            T[] array_2;
+            array_2 = new T[GetLength() + 1];
+            array.CopyTo(array_2, 0);
+            array_2[array_2.Length-1] = date;
+            array = new T[array_2.Length];
+            array_2.CopyTo(array, 0);
         }
 
         /// <summary>
@@ -56,27 +54,25 @@ class ListDS<T>
         public void Remove(T date)
         {
             int count = 0;
-            T[] array_2 = new T[GetLength() - 1];
-            if (GetLength() != 0)
+            int index = 0;
+            if (GetLength()!= 0)
             {
+                T[] array_3;
+                array_3 = new T[GetLength()-1];
                 for (int i = 0; i < array.Length; i++)
                 {
-                    Console.WriteLine("a:"+array[i]);
-                    if (date.Equals(array[i]) && count == 0) { count++; }
-                    else
-                        array_2[i] = array[i+count];
+                    if (date.Equals(array[i]) && count == 0)
+                    {
+                        i++;
+                        count++;
+                    }
+                    array_3[index] = array[i];
+                    index++;
                 }
+                array = new T[array_3.Length];
+                array_3.CopyTo(array, 0);
             }
-            //foreach (var item in array_2)
-            //{
-            //    Console.WriteLine("2:"+item);
-            //}
-            array = new T[GetLength() - 1];
-            index--;
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = array_2[i];
-            }
+            
         }
 
         /// <summary>
@@ -107,7 +103,6 @@ class ListDS<T>
         public void Clean()
         {
             array = new T[] { };
-            index = 0;
         }
 
         /// <summary>
@@ -137,5 +132,27 @@ class ListDS<T>
             }
         }
 
-        public T this[int index]{ get { return array[index]; } }
+        /// <summary>
+        /// 索引器
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T this[int index]
+        {
+            get
+            {
+                return array[index];
+            }
+        }
+
+        /// <summary>
+        /// 遍历列表
+        /// </summary>
+        public void ReadAll()
+        {
+            foreach (var item in array)
+            {
+                Console.WriteLine(item);
+            }
+        }
     }

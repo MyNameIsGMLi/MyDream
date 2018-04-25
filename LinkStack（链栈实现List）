@@ -1,0 +1,42 @@
+StackTest<T> currentTop;
+        int count = 0;
+        public int Count { get { return count; } }
+
+        public void Clean()
+        {
+            currentTop = new StackTest<T>();
+            count = 0;
+        }
+
+        public int GetLength()
+        {
+            return count;
+        }
+
+        public bool IsEmpty()
+        {
+            return count == 0;
+        }
+
+        public T Peek()
+        {
+            return currentTop.Data;
+        }
+
+        public T Pop()
+        {
+            T data = currentTop.Data;
+            currentTop = currentTop.Next;
+            count--;
+            return data;
+
+        }
+
+        public void Push(T item)
+        {
+            StackTest<T> temp = new StackTest<T>(item);
+            temp.Next = currentTop;
+            currentTop = temp;
+
+            count++;
+        }
